@@ -9,6 +9,7 @@
 #AutoIt3Wrapper_Res_Fileversion=1.0.4.0
 #AutoIt3Wrapper_Res_LegalCopyright=Fliegerfaust, edited by tehbank/ProMac
 #AutoIt3Wrapper_Run_Tidy=y
+#AutoIt3Wrapper_Run_Au3Stripper=y
 #EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
 
 
@@ -43,6 +44,7 @@
 #include <GuiStatusBar.au3>
 #include <ProgressConstants.au3>
 #include <SendMessage.au3>
+#include <Date.au3>
 
 Global $g_sBotFile = "multibot.run.exe"
 Global $g_sBotFileAU3 = "multibot.run.au3"
@@ -849,29 +851,18 @@ EndFunc   ;==>UpdateList_AS
 
 Func GetBotVers()
 	Local $aSections
-
 	$aSections = IniReadSectionNames($g_sDirProfiles)
 	For $i = 1 To UBound($aSections, 1) - 1
 		ReadIni($aSections[$i])
-		$hBotVers = FileOpen($g_sIniDir & "\multibot.run.au3")
-
+		If $aSections[$i] = "Options" Then ContinueLoop
+		$hBotVers = FileOpen($g_sIniDir & "\multibot.run.version.au3")
 		$sBotVers = FileRead($hBotVers)
-		$aBotVers = StringRegExp($sBotVers, "(?i)v([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})", 2)
-
+		$aBotVers = StringRegExp($sBotVers, "(?i)v([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3})", 2)
 		FileClose($hBotVers)
-		If $aSections[$i] <> "Options" Then
-			If IsArray($aBotVers) Then
-				IniWrite($g_sDirProfiles, $aSections[$i], "BotVers", $aBotVers[0])
-			Else
-				$hBotVers = FileOpen($g_sIniDir & "\multibot.run.version.au3")
-
-				$sBotVers = FileRead($hBotVers)
-				$aBotVers = StringRegExp($sBotVers, "(?i)v([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})", 2)
-
-				FileClose($hBotVers)
-				If IsArray($aBotVers) Then IniWrite($g_sDirProfiles, $aSections[$i], "BotVers", $aBotVers[0])
-			EndIf
+		If IsArray($aBotVers) Then
+			IniWrite($g_sDirProfiles, $aSections[$i], "BotVers", $aBotVers[0])
 		EndIf
+
 	Next
 EndFunc   ;==>GetBotVers
 
@@ -1095,6 +1086,10 @@ Func GUI_ChangeLog($Title, $Message, $Date)
 	WEnd
 
 EndFunc   ;==>GUI_ChangeLog
+
+Func DebugLog($text)
+	ConsoleWrite(_NowDate() & " >> " & $text & @CRLF)
+EndFunc   ;==>DebugLog
 
 ; THANKS COSOTE
 
