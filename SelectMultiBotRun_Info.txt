@@ -1,6 +1,6 @@
 [General]
-DisplayVers=1.0.3
+DisplayVers=1.0.4
 [Changelog]
-Title=Whats new in 1.0.3 ?
-Message=- Fixed a typo in the Updater. 
-Date=6th March 2019
+Title=Whats new in 1.0.4 ?
+Message=- 2023 Update. 
+Date=15th January 2023
