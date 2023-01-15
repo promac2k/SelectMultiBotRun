@@ -3,7 +3,6 @@
 #AutoIt3Wrapper_Icon=Icon\Multibot.ico
 #AutoIt3Wrapper_Outfile=SelectMultiBotRun.Exe
 #AutoIt3Wrapper_Compression=4
-#AutoIt3Wrapper_UseUpx=y
 #AutoIt3Wrapper_Res_Comment=Made by Fliegerfaust, Edited for MultiBotRun by tehbank/ProMac
 #AutoIt3Wrapper_Res_Description=SelectMultiBotRun for MultiBotRun
 #AutoIt3Wrapper_Res_Fileversion=1.0.4.0
