@@ -1,2 +1,10 @@
+
+# Global Folders
 BackUp/
 .DS_Store
+
+# Global Files
+*.exe
+
+# Exclusion exe ()
+!SelectMultiBotRun.exe
