@@ -1,13 +1,13 @@
 #RequireAdmin
 #Region ;**** Directives created by AutoIt3Wrapper_GUI ****
-#AutoIt3Wrapper_Icon=Icon\Icon.ico
+#AutoIt3Wrapper_Icon=Icon\Multibot.ico
 #AutoIt3Wrapper_Outfile=SelectMultiBotRun.Exe
 #AutoIt3Wrapper_Compression=4
 #AutoIt3Wrapper_UseUpx=y
-#AutoIt3Wrapper_Res_Comment=Made by Fliegerfaust, Edited for MultiBotRun by tehbank
+#AutoIt3Wrapper_Res_Comment=Made by Fliegerfaust, Edited for MultiBotRun by tehbank/ProMac
 #AutoIt3Wrapper_Res_Description=SelectMultiBotRun for MultiBotRun
-#AutoIt3Wrapper_Res_Fileversion=1.0.3.0
-#AutoIt3Wrapper_Res_LegalCopyright=Fliegerfaust, edited by tehbank
+#AutoIt3Wrapper_Res_Fileversion=1.0.4.0
+#AutoIt3Wrapper_Res_LegalCopyright=Fliegerfaust, edited by tehbank/ProMac
 #AutoIt3Wrapper_Run_Tidy=y
 #EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
 
@@ -46,7 +46,7 @@
 
 Global $g_sBotFile = "multibot.run.exe"
 Global $g_sBotFileAU3 = "multibot.run.au3"
-Global $g_sVersion = "1.0.3"
+Global $g_sVersion = "1.0.4"
 Global $g_sDirProfiles = @MyDocumentsDir & "\Profiles.ini"
 Global $g_hGui_Main, $g_hGui_Profile, $g_hGui_Emulator, $g_hGui_Instance, $g_hGui_Dir, $g_hGui_Parameter, $g_hGUI_AutoStart, $g_hGUI_Edit, $g_hListview_Main, $g_hLst_AutoStart, $g_hLog, $g_hProgress, $g_hBtn_Shortcut, $g_hBtn_AutoStart, $g_hContext_Main
 Global $g_hListview_Instances, $g_hLblUpdateAvailable
@@ -88,14 +88,14 @@ Func GUI_Main()
 	$hMenu_Documents = GUICtrlCreateMenuItem("Profile Directory", $hMenu_Help)
 	$hMenu_Startup = GUICtrlCreateMenuItem("Startup Directory", $hMenu_Help)
 	$hMenu_Emulators = GUICtrlCreateMenu("&Emulators")
-	$hMenu_BlueStacks1 = GUICtrlCreateMenuItem("BlueStacks", $hMenu_Emulators)
-	$hMenu_BlueStacks2 = GUICtrlCreateMenuItem("BlueStacks2", $hMenu_Emulators)
+	;$hMenu_BlueStacks1 = GUICtrlCreateMenuItem("BlueStacks", $hMenu_Emulators)
+	;$hMenu_BlueStacks2 = GUICtrlCreateMenuItem("BlueStacks2", $hMenu_Emulators)
 	$hMenu_MEmu = GUICtrlCreateMenuItem("MEmu", $hMenu_Emulators)
-	$hMenu_Droid4X = GUICtrlCreateMenuItem("Droid4X", $hMenu_Emulators)
+	;$hMenu_Droid4X = GUICtrlCreateMenuItem("Droid4X", $hMenu_Emulators)
 	$hMenu_Nox = GUICtrlCreateMenuItem("Nox", $hMenu_Emulators)
-	$hMenu_LeapDroid = GUICtrlCreateMenuItem("LeapDroid", $hMenu_Emulators)
-	$hMenu_KOPLAYER = GUICtrlCreateMenuItem("KOPLAYER", $hMenu_Emulators)
-	$hMenu_iTools = GUICtrlCreateMenuItem("iTools", $hMenu_Emulators)
+	;$hMenu_LeapDroid = GUICtrlCreateMenuItem("LeapDroid", $hMenu_Emulators)
+	;$hMenu_KOPLAYER = GUICtrlCreateMenuItem("KOPLAYER", $hMenu_Emulators)
+	;$hMenu_iTools = GUICtrlCreateMenuItem("iTools", $hMenu_Emulators)
 	$hMenu_Update = GUICtrlCreateMenu("Updates")
 	$hMenu_CheckForUpdate = GUICtrlCreateMenuItem("Check for Updates", $hMenu_Update)
 	$hMenu_Misc = GUICtrlCreateMenu("Misc")
@@ -147,34 +147,34 @@ Func GUI_Main()
 					Case $hMenu_Startup
 						ShellExecute(@StartupDir)
 
-					Case $hMenu_BlueStacks1
-						ShellExecute("https://mega.nz/#!GFVilDAL!Wkyp2xpxFOx8J_Gz8wIf0jGSxTT3IiT6xthvrHhRbME")
+						;Case $hMenu_BlueStacks1
+						;ShellExecute("https://mega.nz/#!GFVilDAL!Wkyp2xpxFOx8J_Gz8wIf0jGSxTT3IiT6xthvrHhRbME")
 
-					Case $hMenu_BlueStacks2
-						ShellExecute("https://mega.nz/#!BpdEUBbZ!4unxWMPzA5rESONTVgNrxlNxSj8H2wwicx4Q15PmBo4")
+						;Case $hMenu_BlueStacks2
+						;ShellExecute("https://mega.nz/#!BpdEUBbZ!4unxWMPzA5rESONTVgNrxlNxSj8H2wwicx4Q15PmBo4")
 
 					Case $hMenu_MEmu
-						ShellExecute("http://www.memuplay.com/download.php?file_name=Memu-Setup&from=home_en")
+						ShellExecute("https://forum.multibot.run/index.php?resources/multibotrun-memu-v5-2-3.61/")
 
-					Case $hMenu_Droid4X
-						ShellExecute("http://dl.haima.me/download/DXDown/win/Z001/Droid4XInstaller.exe")
+						;Case $hMenu_Droid4X
+						;ShellExecute("http://dl.haima.me/download/DXDown/win/Z001/Droid4XInstaller.exe")
 
 					Case $hMenu_Nox
-						ShellExecute("http://en.bignox.com/en/download/fullPackage")
+						ShellExecute("https://forum.multibot.run/index.php?resources/multibotrun-nox-7-0-1-5.62/")
 
-					Case $hMenu_LeapDroid
-						ShellExecute("http://www.leapdroid.com/installer/current/LeapdroidVMInstallerFull.exe")
+						;Case $hMenu_LeapDroid
+						;ShellExecute("http://www.leapdroid.com/installer/current/LeapdroidVMInstallerFull.exe")
 
-					Case $hMenu_KOPLAYER
-						ShellExecute("http://down1.koplayer.com/Emulator/koplayer-1.4.1049.exe")
+						;Case $hMenu_KOPLAYER
+						;ShellExecute("http://down1.koplayer.com/Emulator/koplayer-1.4.1049.exe")
 
-					Case $hMenu_iTools
-						ShellExecute("https://forum.multibot.run/index.php?threads/multibotrun-emulator-itools-2-8-0-english-by-spartan.47/")
+						;Case $hMenu_iTools
+						;ShellExecute("https://forum.multibot.run/index.php?threads/multibotrun-emulator-itools-2-8-0-english-by-spartan.47/")
 
 					Case $hMenu_CheckForUpdate
 
 						$sTempPath = _WinAPI_GetTempFileName(@TempDir)
-						$hUpdateFile = InetGet("https://raw.githubusercontent.com/tehbank/SelectMultiBotRun/master/SelectMultiBotRun_Info.txt", $sTempPath, $INET_FORCERELOAD, $INET_DOWNLOADBACKGROUND)
+						$hUpdateFile = InetGet("https://raw.githubusercontent.com/promac2k/SelectMultiBotRun/master/SelectMultiBotRun_Info.txt", $sTempPath, $INET_FORCERELOAD, $INET_DOWNLOADBACKGROUND)
 						Do
 							Sleep(250)
 						Until InetGetInfo($hUpdateFile, $INET_DOWNLOADCOMPLETE)
@@ -313,8 +313,8 @@ EndFunc   ;==>GUI_Profile
 
 Func GUI_Emulator()
 	$g_hGui_Emulator = GUICreate("Emulator", 258, 167, $g_aGuiPos_Main[0], $g_aGuiPos_Main[1] + 150, -1, -1, $g_hGui_Main)
-	$hCmb_Emulator = GUICtrlCreateCombo("BlueStacks", 24, 72, 201, 21, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
-	GUICtrlSetData(-1, "BlueStacks2|BlueStacks3|MEmu|Droid4X|Nox|LeapDroid|KOPLAYER|iTools")
+	$hCmb_Emulator = GUICtrlCreateCombo("MEmu", 24, 72, 201, 21, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
+	GUICtrlSetData(-1, "MEmu|Nox")
 	$hBtn_Next = GUICtrlCreateButton("Next step", 72, 120, 97, 25, $WS_GROUP)
 	GUICtrlCreateLabel("Please select your Emulator", 24, 8, 204, 57)
 	GUISetState()
@@ -361,36 +361,14 @@ Func GUI_Instance()
 	GUISetState(@SW_HIDE, $g_hGui_Instance)
 
 	Switch $g_sSelectedEmulator
-		Case "BlueStacks", "BlueStacks2"
-			Return
-		Case "Bluestacks3"
-			GUISetState(@SW_SHOW, $g_hGui_Instance)
-			GUICtrlSetData($hLbl_Instance, "Please type in your BlueStacks3 Instance Name! Example: Android , Android_1, Android_2, etc")
-			GUICtrlSetData($hIpt_Instance, "Android_")
 		Case "MEmu"
 			GUISetState(@SW_SHOW, $g_hGui_Instance)
 			GUICtrlSetData($hLbl_Instance, "Please type in your MEmu Instance Name! Example: MEmu , MEmu_1, MEmu_2, etc")
 			GUICtrlSetData($hIpt_Instance, "MEmu_")
-		Case "Droid4X"
-			GUISetState(@SW_SHOW, $g_hGui_Instance)
-			GUICtrlSetData($hLbl_Instance, "Please type in your Droid4x Instance Name! Example: droid4x , droid4x_1, droid4x_2, etc")
-			GUICtrlSetData($hIpt_Instance, "droid4x_")
 		Case "Nox"
 			GUISetState(@SW_SHOW, $g_hGui_Instance)
 			GUICtrlSetData($hLbl_Instance, "Please type in your Nox Instance Name! Example: nox , nox_1, nox_2, etc")
 			GUICtrlSetData($hIpt_Instance, "nox_")
-		Case "LeapDroid"
-			GUISetState(@SW_SHOW, $g_hGui_Instance)
-			GUICtrlSetData($hLbl_Instance, "Please type in your LeapDroid Instance Name! Example: vm1 , vm2, etc")
-			GUICtrlSetData($hIpt_Instance, "vm")
-		Case "KOPLAYER"
-			GUISetState(@SW_SHOW, $g_hGui_Instance)
-			GUICtrlSetData($hLbl_Instance, "Please type in your KOPLAYER Instance Name! Example: KOPLAYER , KOPLAYER_1 , KOPLAYER_2, etc")
-			GUICtrlSetData($hIpt_Instance, "KOPLAYER_")
-		Case "iTools"
-			GUISetState(@SW_SHOW, $g_hGui_Instance)
-			GUICtrlSetData($hLbl_Instance, "Please type in your iTools Instance Name! Example: iToolsVM , iToolsVM_1 , iToolsVM_2, etc")
-			GUICtrlSetData($hIpt_Instance, "iToolsVM_")
 	EndSwitch
 
 	While 1
@@ -607,26 +585,10 @@ Func GUI_Edit()
 
 
 	Switch $g_sIniEmulator
-		Case "BlueStacks"
-			GUICtrlSetData($hCmb_Emulator, "BlueStacks2|BlueStacks3|MEmu|Droid4X|Nox|LeapDroid|KOPLAYER|iTools")
-			GUICtrlSetState($hIpt_Instance, $GUI_DISABLE)
-		Case "BlueStacks2"
-			GUICtrlSetData($hCmb_Emulator, "BlueStacks|BlueStacks3|MEmu|Droid4X|Nox|LeapDroid|KOPLAYER|iTools")
-			GUICtrlSetState($hIpt_Instance, $GUI_DISABLE)
-		Case "BlueStacks3"
-			GUICtrlSetData($hCmb_Emulator, "BlueStacks|BlueStacks2|MEmu|Droid4X|Nox|LeapDroid|KOPLAYER|iTools")
 		Case "MEmu"
-			GUICtrlSetData($hCmb_Emulator, "BlueStacks|BlueStacks2|BlueStacks3|Droid4X|Nox|LeapDroid|KOPLAYER|iTools")
-		Case "Droid4X"
-			GUICtrlSetData($hCmb_Emulator, "BlueStacks|BlueStacks2|BlueStacks3|MEmu|Nox|LeapDroid|KOPLAYER|iTools")
+			GUICtrlSetData($hCmb_Emulator, "Nox")
 		Case "Nox"
-			GUICtrlSetData($hCmb_Emulator, "BlueStacks|BlueStacks2|BlueStacks3|MEmu|Droid4X|LeapDroid|KOPLAYER|iTools")
-		Case "LeapDroid"
-			GUICtrlSetData($hCmb_Emulator, "BlueStacks|BlueStacks2|BlueStacks3|MEmu|Droid4X|Nox|KOPLAYER|iTools")
-		Case "KOPLAYER"
-			GUICtrlSetData($hCmb_Emulator, "BlueStacks|BlueStacks2|BlueStacks3|MEmu|Droid4X|Nox|LeapDroid|iTools")
-		Case "iTools"
-			GUICtrlSetData($hCmb_Emulator, "BlueStacks|BlueStacks2|BlueStacks3|MEmu|Droid4X|Nox|LeapDroid|KOPLAYER")
+			GUICtrlSetData($hCmb_Emulator, "MEmu")
 		Case Else
 			MsgBox($MB_OK, "Error", "Oops, as it looks like you changed Data in the Config File.Pleae delete all corrupted Sections!", 0, $g_hGUI_Edit)
 	EndSwitch
@@ -648,20 +610,10 @@ Func GUI_Edit()
 				ElseIf $sSelectedEmulator <> "BlueStacks" And "BlueStacks2" Then
 					GUICtrlSetState($hIpt_Instance, $GUI_ENABLE)
 					Switch $sSelectedEmulator
-						Case "BlueStacks3"
-							GUICtrlSetData($hIpt_Instance, "Android_")
 						Case "MEmu"
 							GUICtrlSetData($hIpt_Instance, "MEmu_")
-						Case "Droid4X"
-							GUICtrlSetData($hIpt_Instance, "droid4x_")
 						Case "Nox"
 							GUICtrlSetData($hIpt_Instance, "Nox_")
-						Case "LeapDroid"
-							GUICtrlSetData($hIpt_Instance, "vm")
-						Case "KOPLAYER"
-							GUICtrlSetData($hIpt_Instance, "KOPLAYER_")
-						Case "iTools"
-							GUICtrlSetData($hIpt_Instance, "iToolsVM_")
 						Case Else
 							MsgBox($MB_OK, "Error", "Oops, as it looks like you changed Data in the Config File. Please revert it or delete all corrupted Sections!", 0, $g_hGUI_Edit)
 					EndSwitch
@@ -1062,7 +1014,7 @@ EndFunc   ;==>WM_NOTIFY
 Func UpdateSelect()
 
 	FileMove(@ScriptDir & "\" & @ScriptName, @ScriptDir & "\" & "SelectMultiBotRunOLD" & $g_sVersion & ".exe")
-	$hUpdateFile = InetGet("https://github.com/tehbank/SelectMultiBotRun/raw/master/SelectMultiBotRun.exe", @ScriptDir & "\SelectMultiBotRun.exe", $INET_FORCERELOAD, $INET_DOWNLOADBACKGROUND)
+	$hUpdateFile = InetGet("https://raw.githubusercontent.com/promac2k/SelectMultiBotRun/master/SelectMultiBotRun.exe", @ScriptDir & "\SelectMultiBotRun.exe", $INET_FORCERELOAD, $INET_DOWNLOADBACKGROUND)
 	Do
 		Sleep(250)
 	Until InetGetInfo($hUpdateFile, $INET_DOWNLOADCOMPLETE)
@@ -1076,7 +1028,7 @@ EndFunc   ;==>UpdateSelect
 
 Func CheckUpdate()
 	$sTempPath = @MyDocumentsDir & "\SelectMultiBotRun_Info.txt"
-	$hUpdateFile = InetGet("https://raw.githubusercontent.com/tehbank/SelectMultiBotRun/master/SelectMultiBotRun_Info.txt", $sTempPath, $INET_FORCERELOAD, $INET_DOWNLOADBACKGROUND)
+	$hUpdateFile = InetGet("https://raw.githubusercontent.com/promac2k/SelectMultiBotRun/master/SelectMultiBotRun_Info.txt", $sTempPath, $INET_FORCERELOAD, $INET_DOWNLOADBACKGROUND)
 	Do
 		Sleep(250)
 	Until InetGetInfo($hUpdateFile, $INET_DOWNLOADCOMPLETE)
@@ -1095,7 +1047,7 @@ Func ChangeLog()
 	Local $sTitle, $sMessage, $sDate
 
 	$sTempPath = @MyDocumentsDir & "SelectMultiBotRun_Info.txt"
-	$hUpdateFile = InetGet("https://raw.githubusercontent.com/tehbank/SelectMultiBotRun/master/SelectMultiBotRun_Info.txt", $sTempPath, $INET_FORCERELOAD, $INET_DOWNLOADBACKGROUND)
+	$hUpdateFile = InetGet("https://raw.githubusercontent.com/promac2k/SelectMultiBotRun/master/SelectMultiBotRun_Info.txt", $sTempPath, $INET_FORCERELOAD, $INET_DOWNLOADBACKGROUND)
 	Do
 		Sleep(250)
 	Until InetGetInfo($hUpdateFile, $INET_DOWNLOADCOMPLETE)
@@ -1145,39 +1097,9 @@ Func GUI_ChangeLog($Title, $Message, $Date)
 EndFunc   ;==>GUI_ChangeLog
 
 ; THANKS COSOTE
-#Region Android
-Func GetKOPLAYERPath()
-	Local $sKOPLAYERPath = RegRead($HKLM & "\SOFTWARE\KOPLAYER\SETUP\", "InstallPath")
-	If $sKOPLAYERPath = "" Then ; work-a-round
-		$sKOPLAYERPath = @ProgramFilesDir & "\KOPLAYER\"
-	Else
-		If StringRight($sKOPLAYERPath, 1) <> "\" Then $sKOPLAYERPath &= "\"
-	EndIf
-	Return $sKOPLAYERPath
-EndFunc   ;==>GetKOPLAYERPath
 
-Func GetLeapDroidPath()
-	Local $sLeapDroidPath = RegRead($HKLM & "\SOFTWARE\Leapdroid\Leapdroid VM\", "InstallDir")
-	If $sLeapDroidPath <> "" And FileExists($sLeapDroidPath & "\LeapdroidVM.exe") = 0 Then
-		$sLeapDroidPath = ""
-	EndIf
-	; pre 1.5.0
-	Local $sInstallLocation = RegRead($HKLM & "\SOFTWARE" & $Wow6432Node & "\Microsoft\Windows\CurrentVersion\Uninstall\LeapdroidVM\", "InstallLocation")
-	If $sLeapDroidPath = "" And FileExists($sInstallLocation & "\leapdroidvm.ini") = 1 Then
-		$sLeapDroidPath = IniRead($sInstallLocation & "\leapdroidvm.ini", "main", "install_path", "")
-		If FileExists($sLeapDroidPath & "\LeapdroidVM.exe") = 0 Then
-			$sLeapDroidPath = ""
-		EndIf
-	EndIf
-	If $sLeapDroidPath = "" And FileExists($sInstallLocation & "\LeapdroidVM.exe") = 1 Then
-		$sLeapDroidPath = $sInstallLocation
-	EndIf
-	If $sLeapDroidPath = "" And FileExists(@ProgramFilesDir & "\Leapdroid\VM\LeapdroidVM.exe") = 1 Then
-		$sLeapDroidPath = @ProgramFilesDir & "\Leapdroid\VM"
-	EndIf
-	If $sLeapDroidPath <> "" And StringRight($sLeapDroidPath, 1) <> "\" Then $sLeapDroidPath &= "\"
-	Return $sLeapDroidPath
-EndFunc   ;==>GetLeapDroidPath
+#Region Android
+
 
 Func GetMEmuPath()
 	Local $sMEmuPath = EnvGet("MEmu_Path") & "\MEmu\"
@@ -1220,55 +1142,6 @@ Func GetNoxRtPath()
 	Return $sNoxRtPath
 EndFunc   ;==>GetNoxRtPath
 
-Func GetDroid4XPath()
-	Local $sDroid4XPath = RegRead($HKLM & "\SOFTWARE\Droid4X\", "InstallDir")
-	If @error <> 0 Then
-		Local $sDisplayIcon = RegRead($HKLM & "\SOFTWARE" & $Wow6432Node & "\Microsoft\Windows\CurrentVersion\Uninstall\Droid4X\", "DisplayIcon")
-		If @error = 0 Then
-			Local $iLastBS = StringInStr($sDisplayIcon, "\", 0, -1)
-			$sDroid4XPath = StringLeft($sDisplayIcon, $iLastBS)
-		EndIf
-	EndIf
-	If @error <> 0 Then
-		$sDroid4XPath = @ProgramFilesDir & "\Droid4X\"
-	EndIf
-	Return $sDroid4XPath
-EndFunc   ;==>GetDroid4XPath
-
-Func GetBlueStacksPath()
-	$sBlueStacksPath = RegRead($HKLM & "\SOFTWARE\BlueStacks\", "InstallDir")
-	$sPlusMode = RegRead($HKLM & "\SOFTWARE\BlueStacks\", "Engine") = "plus"
-	$sFrontend = "HD-Frontend.exe"
-	If $sPlusMode Then $sFrontend = "HD-Plus-Frontend.exe"
-	If $sBlueStacksPath = "" And FileExists(@ProgramFilesDir & "\BlueStacks\" & $sFrontend) = 1 Then
-		$sBlueStacksPath = @ProgramFilesDir & "\BlueStacks\"
-	EndIf
-
-	Return $sBlueStacksPath
-EndFunc   ;==>GetBlueStacksPath
-
-Func GetiToolsPath()
-	Local $siTools_Path = ""
-	If $siTools_Path <> "" And FileExists($siTools_Path & "\iToolsAVM.exe") = 0 Then
-		$siTools_Path = ""
-	EndIf
-	Local $sInstallLocation = ""
-	Local $sDisplayIcon = RegRead($HKLM & "\SOFTWARE" & $Wow6432Node & "\Microsoft\Windows\CurrentVersion\Uninstall\iToolsAVM\", "DisplayIcon")
-	If @error = 0 Then
-		Local $iLastBS = StringInStr($sDisplayIcon, "\", 0, -1) - 1
-		$sInstallLocation = StringLeft($sDisplayIcon, $iLastBS)
-	EndIf
-	If $siTools_Path = "" And FileExists($sInstallLocation & "\iToolsAVM.exe") = 1 Then
-		$siTools_Path = $sInstallLocation
-	EndIf
-	If $siTools_Path = "" And FileExists(@ProgramFilesDir & "\iToolsAVM\iToolsAVM.exe") = 1 Then
-		$siTools_Path = @ProgramFilesDir & "\iToolsAVM"
-	EndIf
-	SetError(0, 0, 0)
-	If $siTools_Path <> "" And StringRight($siTools_Path, 1) <> "\" Then $siTools_Path &= "\"
-	Return StringReplace($siTools_Path, "\\", "\")
-EndFunc   ;==>GetiToolsPath
-
 Func IsAndroidInstalled($sAndroid)
 	Local $sPath, $sFile, $bIsInstalled = False
 
@@ -1276,26 +1149,9 @@ Func IsAndroidInstalled($sAndroid)
 		Case "MEmu"
 			$sPath = GetMEmuPath()
 			$sFile = "MEmu.exe"
-		Case "Droid4X"
-			$sPath = GetDroid4XPath()
-			$sFile = "Droid4X.exe"
 		Case "Nox"
 			$sPath = GetNoxPath()
 			$sFile = "Nox.exe"
-		Case "LeapDroid"
-			$sPath = GetLeapDroidPath()
-			$sFile = "LeapdroidVM.exe"
-		Case "KOPLAYER"
-			$sPath = GetKOPLAYERPath()
-			$sFile = "KOPLAYER.exe"
-		Case "BlueStacks" Or "BlueStacks2" Or "BlueStacks3"
-			$sPath = GetBlueStacksPath()
-			$bPlusMode = RegRead($HKLM & "\SOFTWARE\BlueStacks\", "Engine") = "plus"
-			$sFile = "HD-Frontend.exe"
-			If $bPlusMode Then $sFile = "HD-Plus-Frontend.exe"
-		Case "iTools"
-			$sPath = GetiToolsPath()
-			$sFile = "iToolsAVM.exe"
 	EndSwitch
 
 	If FileExists($sPath & $sFile) = 1 Then $bIsInstalled = True
@@ -1307,40 +1163,20 @@ Func GetInstanceMgrPath($sAndroid)
 	Local $sManagerPath
 
 	Switch $sAndroid
-		Case "BlueStacks3"
-			$sManagerPath = GetBlueStacksPath() & "BstkVMMgr.exe"
 		Case "MEmu"
 			$sManagerPath = EnvGet("MEmuHyperv_Path") & "\MEmuManage.exe"
 			If FileExists($sManagerPath) = 0 Then
 				$sManagerPath = GetMEmuPath() & "..\MEmuHyperv\MEmuManage.exe"
 			EndIf
-		Case "Droid4X"
-			$sVirtualBox_Path = RegRead($HKLM & "\SOFTWARE\Oracle\VirtualBox\", "InstallDir")
-			If @error <> 0 Then
-				$sVirtualBox_Path = @ProgramFilesDir & "\Oracle\VirtualBox\"
-			EndIf
-			$sVirtualBox_Path = StringReplace($sVirtualBox_Path, "\\", "\")
-			$sManagerPath = $sVirtualBox_Path & "VBoxManage.exe"
 		Case "Nox"
 			$sManagerPath = GetNoxRtPath() & "BigNoxVMMgr.exe"
-		Case "LeapDroid"
-			$sManagerPath = GetLeapDroidPath() & "VBoxManage.exe"
-		Case "KOPLAYER"
-			$sManagerPath = GetKOPLAYERPath() & "vbox\VBoxManage.exe"
-		Case "iTools"
-			$sVirtualBox_Path = RegRead($HKLM & "\SOFTWARE\Oracle\VirtualBox\", "InstallDir")
-			If @error <> 0 And FileExists(@ProgramFilesDir & "\Oracle\VirtualBox\") Then
-				$sVirtualBox_Path = @ProgramFilesDir & "\Oracle\VirtualBox\"
-			EndIf
-			$sVirtualBox_Path = StringReplace($sVirtualBox_Path, "\\", "\")
-			$sManagerPath = $sVirtualBox_Path & "VBoxManage.exe"
-
 	EndSwitch
 
 	Return $sManagerPath
 
 EndFunc   ;==>GetInstanceMgrPath
 #EndRegion Android
+
 #Region CMD
 Func LaunchConsole($sCMD, $sParameter, $bProcessKilled, $iTimeOut = 10000)
 
