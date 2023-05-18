@@ -1,6 +1,6 @@
 [General]
-DisplayVers=1.0.4
+DisplayVers=1.0.7
 [Changelog]
-Title=Whats new in 1.0.4 ?
-Message=- 2023 Update. 
-Date=15th January 2023
+Title=Whats new in 1.0.7 ?
+Message=- Spring 2023 Update. 
+Date=18th May 2023
