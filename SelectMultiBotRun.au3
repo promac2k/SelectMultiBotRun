@@ -3,12 +3,12 @@
 #AutoIt3Wrapper_Icon=Icon\Multibot.ico
 #AutoIt3Wrapper_Outfile=SelectMultiBotRun.Exe
 #AutoIt3Wrapper_Compression=4
-#AutoIt3Wrapper_Res_Comment=Made by Fliegerfaust, Edited for MultiBotRun by tehbank/ProMac
+#AutoIt3Wrapper_UseUpx=y
+#AutoIt3Wrapper_Res_Comment=Made by Fliegerfaust, Edited for MultiBotRun by ProMac
 #AutoIt3Wrapper_Res_Description=SelectMultiBotRun for MultiBotRun
-#AutoIt3Wrapper_Res_Fileversion=1.0.4.0
-#AutoIt3Wrapper_Res_LegalCopyright=Fliegerfaust, edited by tehbank/ProMac
+#AutoIt3Wrapper_Res_Fileversion=1.0.6.0
+#AutoIt3Wrapper_Res_LegalCopyright=Fliegerfaust, edited by ProMac
 #AutoIt3Wrapper_Run_Tidy=y
-#AutoIt3Wrapper_Run_Au3Stripper=y
 #EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
 
 
@@ -47,7 +47,7 @@
 
 Global $g_sBotFile = "multibot.run.exe"
 Global $g_sBotFileAU3 = "multibot.run.au3"
-Global $g_sVersion = "1.0.4"
+Global $g_sVersion = "1.0.7"
 Global $g_sDirProfiles = @MyDocumentsDir & "\Profiles.ini"
 Global $g_hGui_Main, $g_hGui_Profile, $g_hGui_Emulator, $g_hGui_Instance, $g_hGui_Dir, $g_hGui_Parameter, $g_hGUI_AutoStart, $g_hGUI_Edit, $g_hListview_Main, $g_hLst_AutoStart, $g_hLog, $g_hProgress, $g_hBtn_Shortcut, $g_hBtn_AutoStart, $g_hContext_Main
 Global $g_hListview_Instances, $g_hLblUpdateAvailable
@@ -89,14 +89,9 @@ Func GUI_Main()
 	$hMenu_Documents = GUICtrlCreateMenuItem("Profile Directory", $hMenu_Help)
 	$hMenu_Startup = GUICtrlCreateMenuItem("Startup Directory", $hMenu_Help)
 	$hMenu_Emulators = GUICtrlCreateMenu("&Emulators")
-	;$hMenu_BlueStacks1 = GUICtrlCreateMenuItem("BlueStacks", $hMenu_Emulators)
-	;$hMenu_BlueStacks2 = GUICtrlCreateMenuItem("BlueStacks2", $hMenu_Emulators)
+	$hMenu_BlueStacks5 = GUICtrlCreateMenuItem("BlueStacks5", $hMenu_Emulators)
 	$hMenu_MEmu = GUICtrlCreateMenuItem("MEmu", $hMenu_Emulators)
-	;$hMenu_Droid4X = GUICtrlCreateMenuItem("Droid4X", $hMenu_Emulators)
 	$hMenu_Nox = GUICtrlCreateMenuItem("Nox", $hMenu_Emulators)
-	;$hMenu_LeapDroid = GUICtrlCreateMenuItem("LeapDroid", $hMenu_Emulators)
-	;$hMenu_KOPLAYER = GUICtrlCreateMenuItem("KOPLAYER", $hMenu_Emulators)
-	;$hMenu_iTools = GUICtrlCreateMenuItem("iTools", $hMenu_Emulators)
 	$hMenu_Update = GUICtrlCreateMenu("Updates")
 	$hMenu_CheckForUpdate = GUICtrlCreateMenuItem("Check for Updates", $hMenu_Update)
 	$hMenu_Misc = GUICtrlCreateMenu("Misc")
@@ -114,12 +109,9 @@ Func GUI_Main()
 	_GUICtrlMenu_InsertMenuItem($g_hContext_Main, 1, "Edit", $eEdit)
 	_GUICtrlMenu_InsertMenuItem($g_hContext_Main, 2, "Delete", $eDelete)
 	_GUICtrlMenu_InsertMenuItem($g_hContext_Main, 3, "Nickname", $eNickname)
-
 	GUISetState(@SW_SHOW)
-
 	GUIRegisterMsg($WM_CONTEXTMENU, "WM_CONTEXTMENU")
 	GUIRegisterMsg($WM_NOTIFY, "WM_NOTIFY")
-
 
 	UpdateList_Main()
 	CheckUpdate()
@@ -128,7 +120,6 @@ Func GUI_Main()
 	If IniRead($g_sDirProfiles, "Options", "DisplayVersSent", "") = "" Then IniWrite($g_sDirProfiles, "Options", "DisplayVersSent", "1.0")
 
 	While 1
-
 		$aMsg = GUIGetMsg(1)
 		Switch $aMsg[1]
 
@@ -141,41 +132,19 @@ Func GUI_Main()
 						MsgBox($MB_OK, "Help", "To create a new Setup just press the New Setup Button and walk through the Guide!" & @CRLF & @CRLF & "To create a new Shortcut just press the New Shortcut Button and a Shortcut gets created on your Desktop!" & @CRLF & @CRLF & "Double Click an Item in the List to start the Bot with the highlighted Setup!" & @CRLF & @CRLF & "Right Click for a Context Menu." & @CRLF & @CRLF & "The Auto Updater will be downloaded and when you turn it off it will stay there but won't activate. When you delete this Tool make sure to Click on Misc and then Clear Local Files!", 0, $g_hGui_Main)
 					Case $hMenu_ForumTopic
 						ShellExecute("https://forum.multibot.run/index.php?threads/multibotrun-selectmultibotrun-v1-0-1.44/")
-
 					Case $hMenu_Documents
 						ShellExecute(@MyDocumentsDir)
-
 					Case $hMenu_Startup
 						ShellExecute(@StartupDir)
-
-						;Case $hMenu_BlueStacks1
-						;ShellExecute("https://mega.nz/#!GFVilDAL!Wkyp2xpxFOx8J_Gz8wIf0jGSxTT3IiT6xthvrHhRbME")
-
-						;Case $hMenu_BlueStacks2
-						;ShellExecute("https://mega.nz/#!BpdEUBbZ!4unxWMPzA5rESONTVgNrxlNxSj8H2wwicx4Q15PmBo4")
-
+					Case $hMenu_BlueStacks5
+						ShellExecute("https://cdn3.bluestacks.com/downloads/windows/nxt/5.11.100.1063/a2851e52720cc67bfe72ee23599fcaa0/FullInstaller/x64/BlueStacksFullInstaller_5.11.100.1063_amd64_native.exe")
 					Case $hMenu_MEmu
-						ShellExecute("https://forum.multibot.run/index.php?resources/multibotrun-memu-v5-2-3.61/")
-
-						;Case $hMenu_Droid4X
-						;ShellExecute("http://dl.haima.me/download/DXDown/win/Z001/Droid4XInstaller.exe")
-
+						ShellExecute("https://mega.nz/#!RR5FmQYb!qmpHcqzq1s5f6PPJfPRXadYx2AoEUtekjSeZr8kcvl4")
 					Case $hMenu_Nox
-						ShellExecute("https://forum.multibot.run/index.php?resources/multibotrun-nox-7-0-1-5.62/")
-
-						;Case $hMenu_LeapDroid
-						;ShellExecute("http://www.leapdroid.com/installer/current/LeapdroidVMInstallerFull.exe")
-
-						;Case $hMenu_KOPLAYER
-						;ShellExecute("http://down1.koplayer.com/Emulator/koplayer-1.4.1049.exe")
-
-						;Case $hMenu_iTools
-						;ShellExecute("https://forum.multibot.run/index.php?threads/multibotrun-emulator-itools-2-8-0-english-by-spartan.47/")
-
+						ShellExecute("https://mega.nz/#!AIwyQIII!iGkk3ed9iUaWT-PpVfiFANUMeDaiRwUnvhIjVI66_iw")
 					Case $hMenu_CheckForUpdate
-
 						$sTempPath = _WinAPI_GetTempFileName(@TempDir)
-						$hUpdateFile = InetGet("https://raw.githubusercontent.com/promac2k/SelectMultiBotRun/master/SelectMultiBotRun_Info.txt", $sTempPath, $INET_FORCERELOAD, $INET_DOWNLOADBACKGROUND)
+						$hUpdateFile = InetGet("https://raw.githubusercontent.com/tehbank/SelectMultiBotRun/master/SelectMultiBotRun_Info.txt", $sTempPath, $INET_FORCERELOAD, $INET_DOWNLOADBACKGROUND)
 						Do
 							Sleep(250)
 						Until InetGetInfo($hUpdateFile, $INET_DOWNLOADCOMPLETE)
@@ -199,10 +168,7 @@ Func GUI_Main()
 								_GUICtrlStatusBar_SetText($g_hLog, "Are you a magician?")
 								MsgBox($MB_OK, "Update", "You are using a future Version (" & $g_sVersion & ")")
 						EndSelect
-
 						FileDelete($sTempPath)
-
-
 					Case $hMenu_Clear
 						$hMsgDelete = MsgBox($MB_YESNO, "Delete Local Files", "This will delete all SelectMultiBotRun Files (Profiles, Config and Auto Update) Do you want to proceed?", 0, $g_hGui_Main)
 						If $hMsgDelete = 6 Then
@@ -214,10 +180,6 @@ Func GUI_Main()
 							MsgBox($MB_OK, "Delete Local Files", "Deleted all Files from your Computer!", 0, $g_hGui_Main)
 
 						EndIf
-
-
-
-
 					Case $g_hBtn_Setup
 						Local $bSetupStopped = False
 
@@ -252,19 +214,15 @@ Func GUI_Main()
 						GUICtrlSetData($g_hProgress, 0)
 						GUISetState(@SW_ENABLE, $g_hGui_Main)
 						UpdateList_Main()
-
 					Case $g_hBtn_AutoStart
 						GUISetState(@SW_DISABLE, $g_hGui_Main)
 						$g_aGuiPos_Main = WinGetPos($g_hGui_Main)
 						GUI_AutoStart()
 						GUISetState(@SW_ENABLE, $g_hGui_Main)
-
 					Case $g_hBtn_Shortcut
 						CreateShortcut()
 				EndSwitch
-
 		EndSwitch
-
 	WEnd
 EndFunc   ;==>GUI_Main
 
@@ -275,10 +233,7 @@ Func GUI_Profile()
 	GUICtrlSetState($hBtn_Next, $GUI_DISABLE)
 	GUICtrlCreateLabel("Please type in the full Name of your Profile to continue", 24, 8, 204, 57)
 	GUISetState()
-
 	Local $bBtnEnabled = False
-
-
 	While 1
 		Switch GUIGetMsg()
 			Case $GUI_EVENT_CLOSE
@@ -310,20 +265,15 @@ Func GUI_Profile()
 	WEnd
 EndFunc   ;==>GUI_Profile
 
-
-
 Func GUI_Emulator()
 	$g_hGui_Emulator = GUICreate("Emulator", 258, 167, $g_aGuiPos_Main[0], $g_aGuiPos_Main[1] + 150, -1, -1, $g_hGui_Main)
-	$hCmb_Emulator = GUICtrlCreateCombo("MEmu", 24, 72, 201, 21, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
-	GUICtrlSetData(-1, "MEmu|Nox")
+	$hCmb_Emulator = GUICtrlCreateCombo("BlueStacks5", 24, 72, 201, 21, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
+	GUICtrlSetData(-1, "BlueStacks5|MEmu|Nox")
 	$hBtn_Next = GUICtrlCreateButton("Next step", 72, 120, 97, 25, $WS_GROUP)
 	GUICtrlCreateLabel("Please select your Emulator", 24, 8, 204, 57)
 	GUISetState()
 
-
-
 	While 1
-
 		Switch GUIGetMsg()
 			Case $GUI_EVENT_CLOSE
 				IniDelete($g_sDirProfiles, $g_sTypedProfile)
@@ -345,12 +295,9 @@ Func GUI_Emulator()
 						Return 0
 					EndIf
 				EndIf
-
 		EndSwitch
 	WEnd
 EndFunc   ;==>GUI_Emulator
-
-
 
 Func GUI_Instance()
 	Local $hLbl_Instance = 0
@@ -362,6 +309,12 @@ Func GUI_Instance()
 	GUISetState(@SW_HIDE, $g_hGui_Instance)
 
 	Switch $g_sSelectedEmulator
+		Case "BlueStacks", "BlueStacks5"
+			Return
+		Case "Bluestacks5"
+			GUISetState(@SW_SHOW, $g_hGui_Instance)
+			GUICtrlSetData($hLbl_Instance, "Please type in your BlueStacks5 Instance Name! Example: Pie64 , Pie64_1, Pie64_2, etc")
+			GUICtrlSetData($hIpt_Instance, "Pie64_")
 		Case "MEmu"
 			GUISetState(@SW_SHOW, $g_hGui_Instance)
 			GUICtrlSetData($hLbl_Instance, "Please type in your MEmu Instance Name! Example: MEmu , MEmu_1, MEmu_2, etc")
@@ -383,12 +336,10 @@ Func GUI_Instance()
 				$Inst = GUICtrlRead($hIpt_Instance)
 				$Instances = LaunchConsole(GetInstanceMgrPath($g_sSelectedEmulator), "list vms", 1000)
 				Switch $g_sSelectedEmulator
-					Case "BlueStacks3"
-						$Instance = StringRegExp($Instances, "(?i)" & "Android" & "(?:[_][0-9])?", 3)
+					Case "BlueStacks5"
+						$Instance = StringRegExp($Instances, "(?i)" & "Pie64" & "(?:[_][0-9])?", 3)
 					Case "iTools"
 						$Instance = StringRegExp($Instances, "(?)iToolsVM(?:[_][0-9][0-9])?", 3)
-					Case "LeapDroid"
-						$Instance = StringRegExp($Instances, "(?i)vm\d?", 3)
 					Case Else
 						$Instance = StringRegExp($Instances, "(?i)" & $g_sSelectedEmulator & "(?:[_][0-9])?", 3)
 				EndSwitch
@@ -427,8 +378,6 @@ Func GUI_DIR()
 	GUICtrlCreateLabel("Please select the MultiBot Folder where the multibot.run.exe or .au3 is located at", 24, 8, 204, 57)
 	GUISetState()
 
-
-
 	While 1
 
 		Switch GUIGetMsg()
@@ -463,14 +412,8 @@ Func GUI_DIR()
 				IniWrite($g_sDirProfiles, $g_sTypedProfile, "Dir", $sFileSelectFolder)
 				GUIDelete($g_hGui_Dir)
 				ExitLoop
-
-
 		EndSwitch
 	WEnd
-
-
-
-
 EndFunc   ;==>GUI_DIR
 
 Func GUI_PARAMETER()
@@ -493,21 +436,15 @@ Func GUI_PARAMETER()
 	$hChk_HideAndroid = GUICtrlCreateCheckbox("Hide Android", 8, 115)
 	GUICtrlSetTip(-1, "Hide the Android Emulator Window")
 
-
 	$hBtn_Finish = GUICtrlCreateButton("Finish", 72, 160, 97, 25, $WS_GROUP)
 	GUISetState()
 
-
-
 	While 1
-
 		Switch GUIGetMsg()
 			Case $GUI_EVENT_CLOSE
 				IniDelete($g_sDirProfiles, $g_sTypedProfile)
 				GUIDelete($g_hGui_Parameter)
 				Return -1
-
-
 			Case $hBtn_Finish
 				$iEndResult &= GUICtrlRead($hChk_NoWatchdog) = $GUI_CHECKED ? 1 : 0
 				$iEndResult &= GUICtrlRead($hChk_StartBotDocked) = $GUI_CHECKED ? 1 : 0
@@ -519,14 +456,8 @@ Func GUI_PARAMETER()
 				IniWrite($g_sDirProfiles, $g_sTypedProfile, "Parameters", $iEndResult)
 				GUIDelete($g_hGui_Parameter)
 				ExitLoop
-
-
 		EndSwitch
 	WEnd
-
-
-
-
 EndFunc   ;==>GUI_PARAMETER
 
 
@@ -534,7 +465,6 @@ EndFunc   ;==>GUI_PARAMETER
 Func GUI_Edit()
 
 	Local $iEndResult
-
 	$aLstbx_GetSelTxt = _GUICtrlListView_GetSelectedIndices($g_hListview_Main, True)
 	$sLstbx_SelItem = _GUICtrlListView_GetItemText($g_hListview_Main, $aLstbx_GetSelTxt[1])
 	ReadIni($sLstbx_SelItem)
@@ -583,34 +513,32 @@ Func GUI_Edit()
 	$hBtn_Save = GUICtrlCreateButton("Save and Close", 76, 230, 97, 25, $WS_GROUP)
 	GUISetState()
 
-
-
 	Switch $g_sIniEmulator
+		Case "BlueStacks5"
+			GUICtrlSetData($hCmb_Emulator, "MEmu|Nox")
 		Case "MEmu"
-			GUICtrlSetData($hCmb_Emulator, "Nox")
+			GUICtrlSetData($hCmb_Emulator, "BlueStacks5|Nox")
 		Case "Nox"
-			GUICtrlSetData($hCmb_Emulator, "MEmu")
+			GUICtrlSetData($hCmb_Emulator, "BlueStacks5|MEmu")
 		Case Else
 			MsgBox($MB_OK, "Error", "Oops, as it looks like you changed Data in the Config File.Pleae delete all corrupted Sections!", 0, $g_hGUI_Edit)
 	EndSwitch
 
-
-
 	While 1
-
 		Switch GUIGetMsg()
 			Case $GUI_EVENT_CLOSE
 				GUIDelete($g_hGUI_Edit)
 				ExitLoop
-
 			Case $hCmb_Emulator
 				$sSelectedEmulator = GUICtrlRead($hCmb_Emulator)
-				If $sSelectedEmulator = "BlueStacks" Or $sSelectedEmulator = "BlueStacks2" Then
+				If $sSelectedEmulator = "BlueStacks" Then
 					GUICtrlSetState($hIpt_Instance, $GUI_DISABLE)
 					GUICtrlSetData($hIpt_Instance, "")
-				ElseIf $sSelectedEmulator <> "BlueStacks" And "BlueStacks2" Then
+				ElseIf $sSelectedEmulator <> "BlueStacks" And "BlueStacks5" Then
 					GUICtrlSetState($hIpt_Instance, $GUI_ENABLE)
 					Switch $sSelectedEmulator
+						Case "BlueStacks5"
+							GUICtrlSetData($hIpt_Instance, "Pie64_")
 						Case "MEmu"
 							GUICtrlSetData($hIpt_Instance, "MEmu_")
 						Case "Nox"
@@ -619,11 +547,8 @@ Func GUI_Edit()
 							MsgBox($MB_OK, "Error", "Oops, as it looks like you changed Data in the Config File. Please revert it or delete all corrupted Sections!", 0, $g_hGUI_Edit)
 					EndSwitch
 				EndIf
-
-
 			Case $hBtn_Folder
 				Local $sSelectedFolder = FileSelectFolder("Select your MultiBot Folder", $g_sIniDir)
-
 			Case $hBtn_Save
 				$sSelectedProfile = GUICtrlRead($hIpt_Profile)
 				$sSelectedEmulator = GUICtrlRead($hCmb_Emulator)
@@ -644,7 +569,6 @@ Func GUI_Edit()
 				GUIDelete($g_hGUI_Edit)
 				ExitLoop
 		EndSwitch
-
 	WEnd
 EndFunc   ;==>GUI_Edit
 
@@ -658,7 +582,6 @@ Func GUI_AutoStart()
 	$hBtn_Add = GUICtrlCreateButton("Add", 8, 144, 97, 25, $WS_GROUP)
 	$hBtn_Remove = GUICtrlCreateButton("Remove", 152, 144, 97, 25, $WS_GROUP)
 	GUISetState()
-
 
 	$Lstbx_Sel = _GUICtrlListView_GetSelectedIndices($g_hListview_Main, True)
 	If $Lstbx_Sel[0] > 0 Then
@@ -677,19 +600,14 @@ Func GUI_AutoStart()
 		Next
 	EndIf
 
-
 	UpdateList_AS()
 
 	While 1
-
 		Switch GUIGetMsg()
-
 			Case $GUI_EVENT_CLOSE
 				GUIDelete($g_hGUI_AutoStart)
 				ExitLoop
-
 			Case $hBtn_Add
-
 				$Lstbx_Sel = _GUICtrlListView_GetSelectedIndices($g_hListview_Main, True)
 				If $Lstbx_Sel[0] > 0 Then
 					For $i = 1 To $Lstbx_Sel[0]
@@ -702,7 +620,7 @@ Func GUI_AutoStart()
 								$g_sBotFile = $g_sBotFileAU3
 							EndIf
 
-							FileCreateShortcut($g_sIniDir & "\" & $g_sBotFile, @StartupDir & "\MultiBot -" & $g_sIniProfile & ".lnk", $g_sIniDir, $g_sIniProfile & " " & $g_sIniEmulator = "BlueStacks3" ? "BlueStacks2" : $g_sIniEmulator & " " & $g_sIniInstance, "Shortcut for Bot Profile:" & $g_sIniProfile)
+							FileCreateShortcut($g_sIniDir & "\" & $g_sBotFile, @StartupDir & "\MultiBot -" & $g_sIniProfile & ".lnk", $g_sIniDir, $g_sIniProfile & " " & $g_sIniEmulator & " " & $g_sIniInstance, "Shortcut for Bot Profile:" & $g_sIniProfile)
 
 							UpdateList_AS()
 							If FileExists(@StartupDir & "\MultiBot -" & $g_sIniProfile & ".lnk") = 0 Then
@@ -715,11 +633,7 @@ Func GUI_AutoStart()
 						EndIf
 					Next
 				EndIf
-
-
-
 			Case $hBtn_Remove
-
 				$Lstbx_Sel = _GUICtrlListView_GetSelectedIndices($g_hListview_Main, True)
 				If $Lstbx_Sel[0] > 0 Then
 					For $i = 1 To $Lstbx_Sel[0]
@@ -729,9 +643,7 @@ Func GUI_AutoStart()
 							If FileExists(@StartupDir & "\MultiBot -" & $g_sIniProfile & ".lnk") = 1 Then
 								FileDelete(@StartupDir & "\MultiBot -" & $g_sIniProfile & ".lnk")
 								GUICtrlSetData($g_hLst_AutoStart, "")
-
 							EndIf
-
 							UpdateList_AS()
 							If FileExists(@StartupDir & "\MultiBot -" & $g_sIniProfile & ".lnk") = 0 Then
 								GUICtrlSetState($hBtn_Remove, $GUI_DISABLE)
@@ -744,10 +656,7 @@ Func GUI_AutoStart()
 
 					Next
 				EndIf
-
-
 		EndSwitch
-
 	WEnd
 EndFunc   ;==>GUI_AutoStart
 
@@ -759,7 +668,7 @@ Func RunSetup()
 			If $sLstbx_SelItem <> "" Then
 				ReadIni($sLstbx_SelItem)
 				Local $sEmulator = $g_sIniEmulator
-				If $g_sIniEmulator = "BlueStacks3" Then $sEmulator = "BlueStacks2"
+				If $g_sIniEmulator = "BlueStacks3" Then $sEmulator = "BlueStacks5"
 				$aParameters = StringSplit($g_sIniParameters, "")
 				Local $sSpecialParameter = $aParameters[1] = 1 ? " /nowatchdog" : "" & $aParameters[2] = 1 ? " /dock1" : "" & $aParameters[3] = 1 ? " /dock2" : "" & $aParameters[4] = 1 ? " /dpiaware" : "" & $aParameters[5] = 1 ? " /debug" : "" & $aParameters[6] = 1 ? " /minigui" : "" & $aParameters[7] = 1 ? " /hideandroid" : ""
 				_GUICtrlStatusBar_SetText($g_hLog, "Running: " & $g_sIniProfile)
@@ -779,13 +688,13 @@ EndFunc   ;==>RunSetup
 Func CreateShortcut()
 	Local $iCreatedSC = 0, $sBotFileName, $hSC
 	$Lstbx_Sel = _GUICtrlListView_GetSelectedIndices($g_hListview_Main, True)
+	ConsoleWrite(">>>>>>>>>>> $Lstbx_Sel: " & _ArrayToString($Lstbx_Sel) & @CRLF)
 	If $Lstbx_Sel[0] > 0 Then
 		For $i = 1 To $Lstbx_Sel[0]
 			$sLstbx_SelItem = _GUICtrlListView_GetItemText($g_hListview_Main, $Lstbx_Sel[$i])
 			If $sLstbx_SelItem <> "" Then
 				ReadIni($sLstbx_SelItem)
 				Local $sEmulator = $g_sIniEmulator
-				If $g_sIniEmulator = "BlueStacks3" Then $sEmulator = "BlueStacks2"
 				$aParameters = StringSplit($g_sIniParameters, "")
 				Local $sSpecialParameter = $aParameters[1] = 1 ? " /nowatchdog" : "" & $aParameters[2] = 1 ? " /dock1" : "" & $aParameters[3] = 1 ? " /dock2" : "" & $aParameters[4] = 1 ? " /dpiaware" : "" & $aParameters[5] = 1 ? " /debug" : "" & $aParameters[6] = 1 ? " /minigui" : "" & $aParameters[7] = 1 ? " /hideandroid" : ""
 				If FileExists($g_sIniDir & "\" & $g_sBotFile) Then
@@ -795,11 +704,13 @@ Func CreateShortcut()
 				Else
 					MsgBox($MB_OK, "No Bot found", "Couldn't find any Bot in the Directory, please check if you have the multibot.run.exe or the multibot.run.au3 in the Dir and if you selected the right Dir!", 0, $g_hGui_Main)
 				EndIf
-				$hSC = FileCreateShortcut($g_sIniDir & "\" & $sBotFileName, @DesktopDir & "\MultiBot -" & $g_sIniProfile & ".lnk", $g_sIniDir, $g_sIniProfile & " " & $sEmulator & " " & $g_sIniInstance & $sSpecialParameter, "Shortcut for Bot Profile:" & $g_sIniProfile)
+				ConsoleWrite(">>>>>>>>>>> file: " & $g_sIniDir & "\" & $sBotFileName & @CRLF)
+				Local $sProfile = StringSplit($g_sIniProfile, "\")
+				ConsoleWrite(">>>>>>>>>>> lnk: " & @DesktopDir & "\" & $sProfile[UBound($sProfile) - 1] & ".lnk" & @CRLF)
+				$hSC = FileCreateShortcut($g_sIniDir & "\" & $sBotFileName, @DesktopDir & "\" & $sProfile[UBound($sProfile) - 1] & ".lnk", $g_sIniDir, $sProfile[UBound($sProfile) - 1] & " " & $sEmulator & " " & $g_sIniInstance & $sSpecialParameter, "Shortcut for Bot Profile:" & $g_sIniProfile)
 				If $hSC = 1 Then $iCreatedSC += 1
-
+				ConsoleWrite(">>>>>>>>>>> $hSC: " & $hSC & @CRLF)
 			EndIf
-
 		Next
 		If $iCreatedSC = 1 Then
 			_GUICtrlStatusBar_SetText($g_hLog, "Created " & $iCreatedSC & " Shortcut")
@@ -850,18 +761,27 @@ EndFunc   ;==>UpdateList_AS
 
 Func GetBotVers()
 	Local $aSections
+
 	$aSections = IniReadSectionNames($g_sDirProfiles)
 	For $i = 1 To UBound($aSections, 1) - 1
 		ReadIni($aSections[$i])
-		If $aSections[$i] = "Options" Then ContinueLoop
-		$hBotVers = FileOpen($g_sIniDir & "\multibot.run.version.au3")
-		$sBotVers = FileRead($hBotVers)
-		$aBotVers = StringRegExp($sBotVers, "(?i)v([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3})", 2)
-		FileClose($hBotVers)
-		If IsArray($aBotVers) Then
-			IniWrite($g_sDirProfiles, $aSections[$i], "BotVers", $aBotVers[0])
-		EndIf
+		$hBotVers = FileOpen($g_sIniDir & "\multibot.run.au3")
 
+		$sBotVers = FileRead($hBotVers)
+		$aBotVers = StringRegExp($sBotVers, 'v[0-9](.*")', 2)
+
+		FileClose($hBotVers)
+		If $aSections[$i] <> "Options" Then
+			If IsArray($aBotVers) Then
+				IniWrite($g_sDirProfiles, $aSections[$i], "BotVers", StringReplace($aBotVers[0], '"', ""))
+			Else
+				$hBotVers = FileOpen($g_sIniDir & "\multibot.run.version.au3")
+				$sBotVers = FileRead($hBotVers)
+				$aBotVers = StringRegExp($sBotVers, 'v[0-9](.*")', 2)
+				FileClose($hBotVers)
+				If IsArray($aBotVers) Then IniWrite($g_sDirProfiles, $aSections[$i], "BotVers", StringReplace($aBotVers[0], '"', ""))
+			EndIf
+		EndIf
 	Next
 EndFunc   ;==>GetBotVers
 
@@ -882,8 +802,6 @@ Func ReadIni($sSelectedProfile)
 	$g_sIniParameters = IniRead($g_sDirProfiles, $sSelectedProfile, "Parameters", $iParam)
 
 EndFunc   ;==>ReadIni
-
-
 
 Func WM_CONTEXTMENU($hWnd, $msg, $wParam, $lParam)
 	Local $tPoint = _WinAPI_GetMousePos(True, GUICtrlGetHandle($g_hListview_Main))
@@ -910,8 +828,6 @@ Func WM_CONTEXTMENU($hWnd, $msg, $wParam, $lParam)
 		Return
 	EndIf
 EndFunc   ;==>WM_CONTEXTMENU
-
-
 
 Func _ContextMenu($sItem)
 	Switch _GUICtrlMenu_TrackPopupMenu($g_hContext_Main, GUICtrlGetHandle($g_hListview_Main), -1, -1, 1, 1, 2)
@@ -962,7 +878,6 @@ Func _ContextMenu($sItem)
 	EndSwitch
 EndFunc   ;==>_ContextMenu
 
-
 Func WM_NOTIFY($hWnd, $iMsg, $iwParam, $ilParam)
 
 	Local $hWndFrom, $iCode, $tNMHDR, $hWndListView
@@ -1004,7 +919,7 @@ EndFunc   ;==>WM_NOTIFY
 Func UpdateSelect()
 
 	FileMove(@ScriptDir & "\" & @ScriptName, @ScriptDir & "\" & "SelectMultiBotRunOLD" & $g_sVersion & ".exe")
-	$hUpdateFile = InetGet("https://raw.githubusercontent.com/promac2k/SelectMultiBotRun/master/SelectMultiBotRun.exe", @ScriptDir & "\SelectMultiBotRun.exe", $INET_FORCERELOAD, $INET_DOWNLOADBACKGROUND)
+	$hUpdateFile = InetGet("https://github.com/promac2k/SelectMultiBotRun/raw/master/SelectMultiBotRun.Exe", @ScriptDir & "\SelectMultiBotRun.exe", $INET_FORCERELOAD, $INET_DOWNLOADBACKGROUND)
 	Do
 		Sleep(250)
 	Until InetGetInfo($hUpdateFile, $INET_DOWNLOADCOMPLETE)
@@ -1018,7 +933,7 @@ EndFunc   ;==>UpdateSelect
 
 Func CheckUpdate()
 	$sTempPath = @MyDocumentsDir & "\SelectMultiBotRun_Info.txt"
-	$hUpdateFile = InetGet("https://raw.githubusercontent.com/promac2k/SelectMultiBotRun/master/SelectMultiBotRun_Info.txt", $sTempPath, $INET_FORCERELOAD, $INET_DOWNLOADBACKGROUND)
+	$hUpdateFile = InetGet("https://raw.githubusercontent.com/tehbank/SelectMultiBotRun/master/SelectMultiBotRun_Info.txt", $sTempPath, $INET_FORCERELOAD, $INET_DOWNLOADBACKGROUND)
 	Do
 		Sleep(250)
 	Until InetGetInfo($hUpdateFile, $INET_DOWNLOADCOMPLETE)
@@ -1058,8 +973,6 @@ Func ChangeLog()
 	EndIf
 
 	FileDelete($sTempPath)
-
-
 EndFunc   ;==>ChangeLog
 
 Func GUI_ChangeLog($Title, $Message, $Date)
@@ -1073,27 +986,18 @@ Func GUI_ChangeLog($Title, $Message, $Date)
 	$hBtn_Dismiss = GUICtrlCreateButton("Dismiss", 76, 200, 97, 25, $WS_GROUP)
 	GUISetState()
 
-
 	While 1
-
 		Switch GUIGetMsg()
 			Case $GUI_EVENT_CLOSE, $hBtn_Dismiss
 				GUIDelete($g_hGUI_ChangeLog)
 				ExitLoop
 		EndSwitch
-
 	WEnd
 
 EndFunc   ;==>GUI_ChangeLog
 
-Func DebugLog($text)
-	ConsoleWrite(_NowDate() & " >> " & $text & @CRLF)
-EndFunc   ;==>DebugLog
-
 ; THANKS COSOTE
-
 #Region Android
-
 
 Func GetMEmuPath()
 	Local $sMEmuPath = EnvGet("MEmu_Path") & "\MEmu\"
@@ -1136,27 +1040,79 @@ Func GetNoxRtPath()
 	Return $sNoxRtPath
 EndFunc   ;==>GetNoxRtPath
 
+Func GetBlueStacksPath()
+	$sBlueStacksPath = RegRead($HKLM & "\SOFTWARE\BlueStacks_nxt", "InstallDir")
+	$sPlusMode = RegRead($HKLM & "\SOFTWARE\BlueStacks_nxt\", "Engine") = "plus"
+	$sFrontend = "HD-Frontend.exe"
+	If $sPlusMode Then $sFrontend = "HD-Plus-Frontend.exe"
+	If $sBlueStacksPath = "" And FileExists(@ProgramFilesDir & "\BlueStacks_nxt\" & $sFrontend) = 1 Then
+		$sBlueStacksPath = @ProgramFilesDir & "\BlueStacks_nxt\"
+	EndIf
+
+	Return $sBlueStacksPath
+EndFunc   ;==>GetBlueStacksPath
+
+Func GetiToolsPath()
+	DebugLog("GetiToolsPath")
+	Local $siTools_Path = ""
+	If $siTools_Path <> "" And FileExists($siTools_Path & "\iToolsAVM.exe") = 0 Then
+		$siTools_Path = ""
+	EndIf
+	Local $sInstallLocation = ""
+	Local $sDisplayIcon = RegRead($HKLM & "\SOFTWARE" & $Wow6432Node & "\Microsoft\Windows\CurrentVersion\Uninstall\iToolsAVM\", "DisplayIcon")
+	DebugLog("$sDisplayIcon " & $sDisplayIcon)
+	If @error = 0 Then
+		Local $iLastBS = StringInStr($sDisplayIcon, "\", 0, -1) - 1
+		$sInstallLocation = StringLeft($sDisplayIcon, $iLastBS)
+	EndIf
+	If $siTools_Path = "" And FileExists($sInstallLocation & "\iToolsAVM.exe") = 1 Then
+		$siTools_Path = $sInstallLocation
+	EndIf
+	If $siTools_Path = "" And FileExists(@ProgramFilesDir & "\iToolsAVM\iToolsAVM.exe") = 1 Then
+		$siTools_Path = @ProgramFilesDir & "\iToolsAVM"
+	EndIf
+	SetError(0, 0, 0)
+	If $siTools_Path <> "" And StringRight($siTools_Path, 1) <> "\" Then $siTools_Path &= "\"
+	Return StringReplace($siTools_Path, "\\", "\")
+EndFunc   ;==>GetiToolsPath
+
 Func IsAndroidInstalled($sAndroid)
 	Local $sPath, $sFile, $bIsInstalled = False
+	DebugLog("Android to Check -> " & $sAndroid)
 
 	Switch $sAndroid
 		Case "MEmu"
+			DebugLog("MEmu")
 			$sPath = GetMEmuPath()
 			$sFile = "MEmu.exe"
 		Case "Nox"
+			DebugLog("Nox")
 			$sPath = GetNoxPath()
 			$sFile = "Nox.exe"
+		Case "BlueStacks5"
+			DebugLog("BlueStacks")
+			$sPath = GetBlueStacksPath()
+			$bPlusMode = RegRead($HKLM & "\SOFTWARE\BlueStacks_nxt\", "Engine") = "plus"
+			$sFile = "HD-Frontend.exe"
+			If $bPlusMode Then $sFile = "HD-Plus-Frontend.exe"
+		Case "iTools"
+			DebugLog("iTools")
+			$sPath = GetiToolsPath()
+			$sFile = "iToolsAVM.exe"
 	EndSwitch
 
 	If FileExists($sPath & $sFile) = 1 Then $bIsInstalled = True
-
+	DebugLog($sAndroid & " Is Installed ?" & $bIsInstalled)
 	Return $bIsInstalled
 EndFunc   ;==>IsAndroidInstalled
 
 Func GetInstanceMgrPath($sAndroid)
+
 	Local $sManagerPath
 
 	Switch $sAndroid
+		Case "BlueStacks5"
+			$sManagerPath = GetBlueStacksPath() & "BstkVMMgr.exe"
 		Case "MEmu"
 			$sManagerPath = EnvGet("MEmuHyperv_Path") & "\MEmuManage.exe"
 			If FileExists($sManagerPath) = 0 Then
@@ -1164,29 +1120,36 @@ Func GetInstanceMgrPath($sAndroid)
 			EndIf
 		Case "Nox"
 			$sManagerPath = GetNoxRtPath() & "BigNoxVMMgr.exe"
+		Case "iTools"
+			$sVirtualBox_Path = RegRead($HKLM & "\SOFTWARE\Oracle\VirtualBox\", "InstallDir")
+			If @error <> 0 And FileExists(@ProgramFilesDir & "\Oracle\VirtualBox\") Then
+				$sVirtualBox_Path = @ProgramFilesDir & "\Oracle\VirtualBox\"
+			EndIf
+			$sVirtualBox_Path = StringReplace($sVirtualBox_Path, "\\", "\")
+			$sManagerPath = $sVirtualBox_Path & "VBoxManage.exe"
 	EndSwitch
-
 	Return $sManagerPath
-
 EndFunc   ;==>GetInstanceMgrPath
+
+Func DebugLog($Text)
+	ConsoleWrite(TimeDebug() & " - " & $Text & @CRLF)
+EndFunc   ;==>DebugLog
+
+Func TimeDebug() ;Gives the time in '[14:00:00.000]' format
+	Return "[" & @YEAR & "-" & @MON & "-" & @MDAY & " " & _NowTime(5) & "." & @MSEC & "] "
+EndFunc   ;==>TimeDebug
 #EndRegion Android
 
 #Region CMD
 Func LaunchConsole($sCMD, $sParameter, $bProcessKilled, $iTimeOut = 10000)
-
-
 	Local $sData, $iPID, $hTimer
-
 	If StringLen($sParameter) > 0 Then $sCMD &= " " & $sParameter
-
 	$hTimer = TimerInit()
 	$bProcessKilled = False
-
 	$iPID = Run($sCMD, "", @SW_HIDE, $STDERR_MERGED)
 	If $iPID = 0 Then
 		Return
 	EndIf
-
 	Local $hProcess
 	If _WinAPI_GetVersion() >= 6.0 Then
 		$hProcess = _WinAPI_OpenProcess($PROCESS_QUERY_LIMITED_INFORMATION, 0, $iPID)
