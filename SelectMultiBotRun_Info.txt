@@ -1,6 +1,6 @@
 [General]
-DisplayVers=1.0.7
+DisplayVers=1.0.8
 [Changelog]
-Title=Whats new in 1.0.7 ?
-Message=- Spring 2023 Update. 
-Date=18th May 2023
+Title=Whats new in 1.0.8 ?
+Message=- LDPalyer compatibility. 
+Date=17th January 2024
