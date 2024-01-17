@@ -6,7 +6,7 @@
 #AutoIt3Wrapper_UseUpx=y
 #AutoIt3Wrapper_Res_Comment=Made by Fliegerfaust, Edited for MultiBotRun by ProMac
 #AutoIt3Wrapper_Res_Description=SelectMultiBotRun for MultiBotRun
-#AutoIt3Wrapper_Res_Fileversion=1.0.6.0
+#AutoIt3Wrapper_Res_Fileversion=1.0.8.0
 #AutoIt3Wrapper_Res_LegalCopyright=Fliegerfaust, edited by ProMac
 #AutoIt3Wrapper_Run_Tidy=y
 #EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
@@ -47,7 +47,7 @@
 
 Global $g_sBotFile = "multibot.run.exe"
 Global $g_sBotFileAU3 = "multibot.run.au3"
-Global $g_sVersion = "1.0.7"
+Global $g_sVersion = "1.0.8"
 Global $g_sDirProfiles = @MyDocumentsDir & "\Profiles.ini"
 Global $g_hGui_Main, $g_hGui_Profile, $g_hGui_Emulator, $g_hGui_Instance, $g_hGui_Dir, $g_hGui_Parameter, $g_hGUI_AutoStart, $g_hGUI_Edit, $g_hListview_Main, $g_hLst_AutoStart, $g_hLog, $g_hProgress, $g_hBtn_Shortcut, $g_hBtn_AutoStart, $g_hContext_Main
 Global $g_hListview_Instances, $g_hLblUpdateAvailable
@@ -90,7 +90,7 @@ Func GUI_Main()
 	$hMenu_Startup = GUICtrlCreateMenuItem("Startup Directory", $hMenu_Help)
 	$hMenu_Emulators = GUICtrlCreateMenu("&Emulators")
 	$hMenu_BlueStacks5 = GUICtrlCreateMenuItem("BlueStacks5", $hMenu_Emulators)
-	$hMenu_MEmu = GUICtrlCreateMenuItem("MEmu", $hMenu_Emulators)
+	$hMenu_MEmu = GUICtrlCreateMenuItem("LDpayer", $hMenu_Emulators)
 	$hMenu_Nox = GUICtrlCreateMenuItem("Nox", $hMenu_Emulators)
 	$hMenu_Update = GUICtrlCreateMenu("Updates")
 	$hMenu_CheckForUpdate = GUICtrlCreateMenuItem("Check for Updates", $hMenu_Update)
@@ -137,14 +137,14 @@ Func GUI_Main()
 					Case $hMenu_Startup
 						ShellExecute(@StartupDir)
 					Case $hMenu_BlueStacks5
-						ShellExecute("https://cdn3.bluestacks.com/downloads/windows/nxt/5.11.100.1063/a2851e52720cc67bfe72ee23599fcaa0/FullInstaller/x64/BlueStacksFullInstaller_5.11.100.1063_amd64_native.exe")
+						ShellExecute("https://webftp.marioantunes.pt/BlueStacks_5-14-10-2201.zip")
 					Case $hMenu_MEmu
-						ShellExecute("https://mega.nz/#!RR5FmQYb!qmpHcqzq1s5f6PPJfPRXadYx2AoEUtekjSeZr8kcvl4")
+						ShellExecute("https://webftp.marioantunes.pt/LDPlayer_9.0.63.zip")
 					Case $hMenu_Nox
-						ShellExecute("https://mega.nz/#!AIwyQIII!iGkk3ed9iUaWT-PpVfiFANUMeDaiRwUnvhIjVI66_iw")
+						ShellExecute("https://webftp.marioantunes.pt/nox_setup_v7.0.5.9_full_intl%20(12-2023).zip")
 					Case $hMenu_CheckForUpdate
 						$sTempPath = _WinAPI_GetTempFileName(@TempDir)
-						$hUpdateFile = InetGet("https://raw.githubusercontent.com/tehbank/SelectMultiBotRun/master/SelectMultiBotRun_Info.txt", $sTempPath, $INET_FORCERELOAD, $INET_DOWNLOADBACKGROUND)
+						$hUpdateFile = InetGet("https://raw.githubusercontent.com/promac2k/SelectMultiBotRun/master/SelectMultiBotRun_Info.txt", $sTempPath, $INET_FORCERELOAD, $INET_DOWNLOADBACKGROUND)
 						Do
 							Sleep(250)
 						Until InetGetInfo($hUpdateFile, $INET_DOWNLOADCOMPLETE)
@@ -268,7 +268,7 @@ EndFunc   ;==>GUI_Profile
 Func GUI_Emulator()
 	$g_hGui_Emulator = GUICreate("Emulator", 258, 167, $g_aGuiPos_Main[0], $g_aGuiPos_Main[1] + 150, -1, -1, $g_hGui_Main)
 	$hCmb_Emulator = GUICtrlCreateCombo("BlueStacks5", 24, 72, 201, 21, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
-	GUICtrlSetData(-1, "BlueStacks5|MEmu|Nox")
+	GUICtrlSetData(-1, "BlueStacks5|LDPLayer|Nox")
 	$hBtn_Next = GUICtrlCreateButton("Next step", 72, 120, 97, 25, $WS_GROUP)
 	GUICtrlCreateLabel("Please select your Emulator", 24, 8, 204, 57)
 	GUISetState()
@@ -315,10 +315,10 @@ Func GUI_Instance()
 			GUISetState(@SW_SHOW, $g_hGui_Instance)
 			GUICtrlSetData($hLbl_Instance, "Please type in your BlueStacks5 Instance Name! Example: Pie64 , Pie64_1, Pie64_2, etc")
 			GUICtrlSetData($hIpt_Instance, "Pie64_")
-		Case "MEmu"
+		Case "LDPlayer"
 			GUISetState(@SW_SHOW, $g_hGui_Instance)
-			GUICtrlSetData($hLbl_Instance, "Please type in your MEmu Instance Name! Example: MEmu , MEmu_1, MEmu_2, etc")
-			GUICtrlSetData($hIpt_Instance, "MEmu_")
+			GUICtrlSetData($hLbl_Instance, "Please type in your LDPlayer Instance Name! Example: LDPlayer , LDPlayer-1, LDPlayer-2, etc")
+			GUICtrlSetData($hIpt_Instance, "LDPlayer-")
 		Case "Nox"
 			GUISetState(@SW_SHOW, $g_hGui_Instance)
 			GUICtrlSetData($hLbl_Instance, "Please type in your Nox Instance Name! Example: nox , nox_1, nox_2, etc")
@@ -338,8 +338,8 @@ Func GUI_Instance()
 				Switch $g_sSelectedEmulator
 					Case "BlueStacks5"
 						$Instance = StringRegExp($Instances, "(?i)" & "Pie64" & "(?:[_][0-9])?", 3)
-					Case "iTools"
-						$Instance = StringRegExp($Instances, "(?)iToolsVM(?:[_][0-9][0-9])?", 3)
+					Case "LDPlayer"
+						$Instance = 2
 					Case Else
 						$Instance = StringRegExp($Instances, "(?i)" & $g_sSelectedEmulator & "(?:[_][0-9])?", 3)
 				EndSwitch
@@ -351,7 +351,7 @@ Func GUI_Instance()
 					IniDelete($g_sDirProfiles, $g_sTypedProfile)
 					Return -1
 
-				ElseIf _ArraySearch($Instance, $Inst, 0, 0, 1) = -1 Then
+				ElseIf _ArraySearch($Instance, $Inst, 0, 0, 1) = -1 And $g_sSelectedEmulator <> "LDPlayer" Then
 					$Msg2 = MsgBox($MB_YESNO, "Typo ?", "Couldn't find the Instance Name you typed in. Please check your Instances once again and retype it ( Also check the case sensitivity)" & @CRLF & "Here is a list of Instances I could find on your PC:" & @CRLF & @CRLF & _ArrayToString($Instance, @CRLF) & @CRLF & @CRLF & 'If you are sure that you got the Instance right but this Message keeps coming then press "Yes" to continue!' & @CRLF & @CRLF & "Do you want to continue?", 0, $g_hGui_Instance)
 					If $Msg2 = $IDYES Then
 						IniWrite($g_sDirProfiles, $g_sTypedProfile, "Instance", $Inst)
@@ -515,11 +515,11 @@ Func GUI_Edit()
 
 	Switch $g_sIniEmulator
 		Case "BlueStacks5"
-			GUICtrlSetData($hCmb_Emulator, "MEmu|Nox")
-		Case "MEmu"
+			GUICtrlSetData($hCmb_Emulator, "LDPlayer|Nox")
+		Case "LDPlayer"
 			GUICtrlSetData($hCmb_Emulator, "BlueStacks5|Nox")
 		Case "Nox"
-			GUICtrlSetData($hCmb_Emulator, "BlueStacks5|MEmu")
+			GUICtrlSetData($hCmb_Emulator, "BlueStacks5|LDPlayer")
 		Case Else
 			MsgBox($MB_OK, "Error", "Oops, as it looks like you changed Data in the Config File.Pleae delete all corrupted Sections!", 0, $g_hGUI_Edit)
 	EndSwitch
@@ -539,8 +539,8 @@ Func GUI_Edit()
 					Switch $sSelectedEmulator
 						Case "BlueStacks5"
 							GUICtrlSetData($hIpt_Instance, "Pie64_")
-						Case "MEmu"
-							GUICtrlSetData($hIpt_Instance, "MEmu_")
+						Case "LDPlayer"
+							GUICtrlSetData($hIpt_Instance, "LDPlayer-")
 						Case "Nox"
 							GUICtrlSetData($hIpt_Instance, "Nox_")
 						Case Else
@@ -933,7 +933,7 @@ EndFunc   ;==>UpdateSelect
 
 Func CheckUpdate()
 	$sTempPath = @MyDocumentsDir & "\SelectMultiBotRun_Info.txt"
-	$hUpdateFile = InetGet("https://raw.githubusercontent.com/tehbank/SelectMultiBotRun/master/SelectMultiBotRun_Info.txt", $sTempPath, $INET_FORCERELOAD, $INET_DOWNLOADBACKGROUND)
+	$hUpdateFile = InetGet("https://raw.githubusercontent.com/promac2k/SelectMultiBotRun/master/SelectMultiBotRun_Info.txt", $sTempPath, $INET_FORCERELOAD, $INET_DOWNLOADBACKGROUND)
 	Do
 		Sleep(250)
 	Until InetGetInfo($hUpdateFile, $INET_DOWNLOADCOMPLETE)
@@ -1000,23 +1000,21 @@ EndFunc   ;==>GUI_ChangeLog
 #Region Android
 
 Func GetMEmuPath()
-	Local $sMEmuPath = EnvGet("MEmu_Path") & "\MEmu\"
-	If FileExists($sMEmuPath & "MEmu.exe") = 0 Then
-		Local $sInstallLocation = RegRead($HKLM & "\SOFTWARE" & $Wow6432Node & "\Microsoft\Windows\CurrentVersion\Uninstall\MEmu\", "InstallLocation")
-		If @error = 0 And FileExists($sInstallLocation & "\MEmu\MEmu.exe") = 1 Then
-			$sMEmuPath = $sInstallLocation & "\MEmu\"
-		Else
-			Local $sDisplayIcon = RegRead($HKLM & "\SOFTWARE" & $Wow6432Node & "\Microsoft\Windows\CurrentVersion\Uninstall\MEmu\", "DisplayIcon")
-			If @error = 0 Then
-				Local $iLastBS = StringInStr($sDisplayIcon, "\", 0, -1)
-				$sMEmuPath = StringLeft($sDisplayIcon, $iLastBS)
-				If StringLeft($sMEmuPath, 1) = """" Then $sMEmuPath = StringMid($sMEmuPath, 2)
-			Else
-				$sMEmuPath = @ProgramFilesDir & "\Microvirt\MEmu\"
-			EndIf
-		EndIf
+	; GetLDPlayerPath
+	DebugLog("GetLDPlayerPath")
+	; HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\LDPlayer9
+	Local $InstallLocation = RegRead($HKLM & "\SOFTWARE" & $Wow6432Node & "\Microsoft\Windows\CurrentVersion\Uninstall\LDPlayer9", "DisplayIcon")
+	; C:\LDPlayer\LDPlayer9\dnplayer.exe
+	If @error Then
+		DebugLog("GetLDPlayerPath Error in RegRead")
 	EndIf
-	Return $sMEmuPath
+	If Not FileExists($InstallLocation) Then ; work-a-round
+		If FileExists("C:\LDPlayer\LDPlayer9\dnplayer.exe") Then $InstallLocation = "C:\LDPlayer\LDPlayer9\dnplayer.exe"
+	EndIf
+
+	Local $LDPlayer_Path = StringReplace($InstallLocation, "dnplayer.exe", "")
+	$LDPlayer_Path = StringReplace($LDPlayer_Path, "\\", "\")
+	Return $LDPlayer_Path
 EndFunc   ;==>GetMEmuPath
 
 Func GetNoxPath()
@@ -1081,10 +1079,10 @@ Func IsAndroidInstalled($sAndroid)
 	DebugLog("Android to Check -> " & $sAndroid)
 
 	Switch $sAndroid
-		Case "MEmu"
-			DebugLog("MEmu")
+		Case "LDPlayer"
+			DebugLog("LDPlayer")
 			$sPath = GetMEmuPath()
-			$sFile = "MEmu.exe"
+			$sFile = "dnplayer.exe"
 		Case "Nox"
 			DebugLog("Nox")
 			$sPath = GetNoxPath()
@@ -1113,10 +1111,9 @@ Func GetInstanceMgrPath($sAndroid)
 	Switch $sAndroid
 		Case "BlueStacks5"
 			$sManagerPath = GetBlueStacksPath() & "BstkVMMgr.exe"
-		Case "MEmu"
-			$sManagerPath = EnvGet("MEmuHyperv_Path") & "\MEmuManage.exe"
-			If FileExists($sManagerPath) = 0 Then
-				$sManagerPath = GetMEmuPath() & "..\MEmuHyperv\MEmuManage.exe"
+		Case "LDPlayer"
+			If FileExists("C:\Program Files\ldplayer9box\VBoxManage.exe") = 0 Then
+				$sManagerPath = "C:\Program Files\ldplayer9box\VBoxManage.exe"
 			EndIf
 		Case "Nox"
 			$sManagerPath = GetNoxRtPath() & "BigNoxVMMgr.exe"
