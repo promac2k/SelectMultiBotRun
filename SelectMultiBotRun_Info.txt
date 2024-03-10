@@ -1,6 +1,6 @@
 [General]
-DisplayVers=1.0.8
+DisplayVers=1.0.9
 [Changelog]
-Title=Whats new in 1.0.8 ?
-Message=- LDPalyer compatibility. 
-Date=17th January 2024
+Title=Whats new in 1.0.9 ?
+Message=- Fixed Bluestacks path issues. 
+Date=10th March 2024

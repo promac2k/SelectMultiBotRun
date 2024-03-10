@@ -6,7 +6,7 @@
 #AutoIt3Wrapper_UseUpx=y
 #AutoIt3Wrapper_Res_Comment=Made by Fliegerfaust, Edited for MultiBotRun by ProMac
 #AutoIt3Wrapper_Res_Description=SelectMultiBotRun for MultiBotRun
-#AutoIt3Wrapper_Res_Fileversion=1.0.8.0
+#AutoIt3Wrapper_Res_Fileversion=1.0.9.0
 #AutoIt3Wrapper_Res_LegalCopyright=Fliegerfaust, edited by ProMac
 #AutoIt3Wrapper_Run_Tidy=y
 #EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
@@ -47,7 +47,7 @@
 
 Global $g_sBotFile = "multibot.run.exe"
 Global $g_sBotFileAU3 = "multibot.run.au3"
-Global $g_sVersion = "1.0.8"
+Global $g_sVersion = "1.0.9"
 Global $g_sDirProfiles = @MyDocumentsDir & "\Profiles.ini"
 Global $g_hGui_Main, $g_hGui_Profile, $g_hGui_Emulator, $g_hGui_Instance, $g_hGui_Dir, $g_hGui_Parameter, $g_hGUI_AutoStart, $g_hGUI_Edit, $g_hListview_Main, $g_hLst_AutoStart, $g_hLog, $g_hProgress, $g_hBtn_Shortcut, $g_hBtn_AutoStart, $g_hContext_Main
 Global $g_hListview_Instances, $g_hLblUpdateAvailable
@@ -185,25 +185,31 @@ Func GUI_Main()
 
 						_GUICtrlStatusBar_SetText($g_hLog, "Creating new Setup")
 						WinSetOnTop($g_hGui_Main, "", $WINDOWS_ONTOP)
+						DebugLog("Creating new Setup")
 
 						Do
 							GUISetState(@SW_DISABLE, $g_hGui_Main)
 							$g_aGuiPos_Main = WinGetPos($g_hGui_Main)
 							_GUICtrlStatusBar_SetText($g_hLog, "Select Profile")
+							DebugLog("=== GUI_Profile ===")
 							$bSetupStopped = GUI_Profile()
 							If $bSetupStopped Then ExitLoop
 							GUICtrlSetData($g_hProgress, 20)
+							DebugLog("=== GUI_Emulator ===")
 							$bSetupStopped = GUI_Emulator()
 							If $bSetupStopped Then ExitLoop
 							GUICtrlSetData($g_hProgress, 40)
+							DebugLog("=== GUI_Instance ===")
 							$bSetupStopped = GUI_Instance()
 							If $bSetupStopped Then ExitLoop
 							GUICtrlSetData($g_hProgress, 60)
+							DebugLog("=== GUI_DIR ===")
 							$bSetupStopped = GUI_DIR()
 							If $bSetupStopped Then ExitLoop
 							GUICtrlSetData($g_hProgress, 80)
 							$bSetupStopped = GUI_PARAMETER()
 							If $bSetupStopped Then ExitLoop
+							DebugLog("=== Setup Created ===")
 							_GUICtrlStatusBar_SetText($g_hLog, "Setup Created!")
 						Until 1
 
@@ -309,7 +315,7 @@ Func GUI_Instance()
 	GUISetState(@SW_HIDE, $g_hGui_Instance)
 
 	Switch $g_sSelectedEmulator
-		Case "BlueStacks", "BlueStacks5"
+		Case "BlueStacks"
 			Return
 		Case "Bluestacks5"
 			GUISetState(@SW_SHOW, $g_hGui_Instance)
@@ -1040,9 +1046,10 @@ EndFunc   ;==>GetNoxRtPath
 
 Func GetBlueStacksPath()
 	$sBlueStacksPath = RegRead($HKLM & "\SOFTWARE\BlueStacks_nxt", "InstallDir")
+	DebugLog(" $sBlueStacksPath ?" & $sBlueStacksPath)
 	$sPlusMode = RegRead($HKLM & "\SOFTWARE\BlueStacks_nxt\", "Engine") = "plus"
-	$sFrontend = "HD-Frontend.exe"
-	If $sPlusMode Then $sFrontend = "HD-Plus-Frontend.exe"
+	$sFrontend = "HD-Player.exe"
+	If $sPlusMode Then $sFrontend = "HD-Plus-Player.exe"
 	If $sBlueStacksPath = "" And FileExists(@ProgramFilesDir & "\BlueStacks_nxt\" & $sFrontend) = 1 Then
 		$sBlueStacksPath = @ProgramFilesDir & "\BlueStacks_nxt\"
 	EndIf
@@ -1091,8 +1098,8 @@ Func IsAndroidInstalled($sAndroid)
 			DebugLog("BlueStacks")
 			$sPath = GetBlueStacksPath()
 			$bPlusMode = RegRead($HKLM & "\SOFTWARE\BlueStacks_nxt\", "Engine") = "plus"
-			$sFile = "HD-Frontend.exe"
-			If $bPlusMode Then $sFile = "HD-Plus-Frontend.exe"
+			$sFile = "HD-Player.exe"
+			If $bPlusMode Then $sFile = "HD-Plus-Player.exe"
 		Case "iTools"
 			DebugLog("iTools")
 			$sPath = GetiToolsPath()
